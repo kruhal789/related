@@ -75,7 +75,7 @@
 			li = document.createElement("li");
 			a = document.createElement("a");
 			a.href = relatedPosts[i].link;
-			a.title = relatedPosts[i].count + " common " + (relatedPosts[i].count === 1 ? "category" : "categories");
+			a.title = relatedPosts[i].count + " .title " + (relatedPosts[i].count === 1 ? "category" : "categories");
 			a.onclick = clickHandler;
 			span = document.createElement("span");
 			if (relatedPosts[i].icon) {
