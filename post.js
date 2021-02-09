@@ -3,8 +3,8 @@
 		return;
 	}
 	var config = {}, postLink, postCategories = [], i, links, script;
-	config.maxPostsToFetch = (typeof RelatedPosts_config === "object" && RelatedPosts_config.maxPostsToFetch) || 100;
-	config.maxPostsToDisplay = (typeof RelatedPosts_config === "object" && RelatedPosts_config.maxPostsToDisplay) || 6;
+	config.maxPostsToFetch = (typeof bloggerRelatedPosts_config === "object" && bloggerRelatedPosts_config.maxPostsToFetch) || 100;
+	config.maxPostsToDisplay = (typeof bloggerRelatedPosts_config === "object" && bloggerRelatedPosts_config.maxPostsToDisplay) || 6;
 	postLink = document.querySelector("link[rel=canonical]").href;
 	if (/\x2F\d{4}\x2F\d{2}\x2F/.test(postLink) === false) {
 		return;
@@ -12,7 +12,7 @@
 	for (i = 0, links = document.querySelectorAll("a[rel=tag]"); i < links.length; i++) {
 		postCategories.push(decodeURIComponent(links[i].href.split("/").pop()));
 	}
-	RelatedPosts_callback = function(data) {
+	bloggerRelatedPosts_callback = function(data) {
 		var relatedPosts = [], i, j, k, entries, item, links, categories, clickHandler, div, ul, li, a, span, small;
 		for (i = 0, entries = data.feed.entry; i < entries.length; i++) {
 			item = {
@@ -57,7 +57,7 @@
 				var link = this;
 				ga("send", {
 					hitType: "event",
-					eventCategory: " Related Posts",
+					eventCategory: "Blogger Related Posts",
 					eventAction: "Related Post Clicked",
 					eventLabel: link.href,
 					hitCallback: function() {
@@ -68,7 +68,7 @@
 			}
 		};
 		div = document.createElement("div");
-		div.id = "related-posts";
+		div.id = "blogger-related-posts";
 		div.innerHTML = "<h4>Related Posts</h4>";
 		ul = document.createElement("ul");
 		for (i = 0; i < relatedPosts.length; i++) {
@@ -93,6 +93,6 @@
 		document.querySelector(".post").appendChild(div);
 	};
 	script = document.createElement("script");
-	script.src = "/feeds/posts/summary?alt=json&callback=RelatedPosts_callback&max-results=" + config.maxPostsToFetch + "&q=" + encodeURIComponent('label:"' + postCategories.join('" | label:"') + '"');
+	script.src = "/feeds/posts/summary?alt=json&callback=bloggerRelatedPosts_callback&max-results=" + config.maxPostsToFetch + "&q=" + encodeURIComponent('label:"' + postCategories.join('" | label:"') + '"');
 	document.querySelector("head").appendChild(script);
 })();
